@@ -38,6 +38,10 @@ const setToZero = function (i) {
     i.textContent = 0;
 }
 
+const getOtherPlayerTurn = function (turn) {
+    return (turn === 0) ? 1 : 0;
+}
+
 /* End Helpers funcs */
 
 
@@ -79,7 +83,7 @@ btnHold.addEventListener('click', function () {
         playerCurrentScore = 0;
         document.getElementById(`score--${turn}`).textContent = playerScore[turn];
         document.getElementById(`current--${turn}`).textContent = 0;
-        if (playerScore[turn] < 10) {
+        if (playerScore[turn] < 60) {
             playerZeroEl.classList.toggle('player--active');
             playerOneEl.classList.toggle('player--active');
         } else {
@@ -93,8 +97,26 @@ btnHold.addEventListener('click', function () {
             btnHold.disabled = true;
             btnRoll.disabled = true;
             document.getElementById(`name--${turn}`).textContent += ' Wins';
+            playing = 0;
         }
         turn = (turn === 0) ? 1 : 0;
-        playing = 0;
+
     }
+});
+
+btnNew.addEventListener('click', function () {
+    let otherPlayerTurn = getOtherPlayerTurn(turn)
+    document.getElementById(`name--${otherPlayerTurn}`).textContent = `Player ${otherPlayerTurn+1}`;
+    document
+        .querySelector(`.player--${otherPlayerTurn}`)
+        .classList.remove('player--winner');
+    document.getElementById(`score--0`).textContent = 0;
+    document.getElementById(`score--1`).textContent = 0;
+    playerZeroEl.classList.add('player--active');
+    playerOneEl.classList.remove('player--active');
+    btnHold.disabled = false;
+    btnRoll.disabled = false;
+    playerScore = [0, 0];
+    turn = 0;
+    playing = 1;
 });
