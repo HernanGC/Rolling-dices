@@ -103,7 +103,7 @@ btnHold.addEventListener('click', function () {
 
     }
 });
-
+// TODO: Refactor de esto, crear function init() que inicialice el programa
 btnNew.addEventListener('click', function () {
     let otherPlayerTurn = getOtherPlayerTurn(turn)
     document.getElementById(`name--${otherPlayerTurn}`).textContent = `Player ${otherPlayerTurn+1}`;
